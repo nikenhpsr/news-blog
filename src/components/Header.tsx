@@ -5,7 +5,7 @@ export default function Header() {
     <>
       <h2>Media Maven</h2>
       <p>
-        Simplify Your News Blogging Experience with this User-Friendly Template
+        Simplify Your News Blogging Experience with this User-Friendly Website
       </p>
       <Symbol />
     </>
