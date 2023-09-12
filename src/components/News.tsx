@@ -69,10 +69,6 @@ const News: React.FC = () => {
               <p className="text-neutral-500 dark:text-neutral-300 desc">
                 {newsItem.description}
               </p>
-              <p className="date">
-                Date: {new Date(newsItem.date).toLocaleString()}
-              </p>
-              <p className="source">Source: {newsItem.source}</p>
               <a
                 className="link"
                 href={newsItem.url}
@@ -81,6 +77,10 @@ const News: React.FC = () => {
               >
                 Read More
               </a>
+              <p className="date">
+                Date: {new Date(newsItem.date).toLocaleString()}
+              </p>
+              <p className="source">Source: {newsItem.source}</p>
               <hr />
             </li>
           ))

@@ -33,5 +33,5 @@ li {
   margin: auto;
   margin-bottom: 5px;
   display: flex;
-  justify-content: right;
+  justify-content: left;
 }
