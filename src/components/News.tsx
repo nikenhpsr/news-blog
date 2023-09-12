@@ -15,7 +15,7 @@ interface NewsDataProps {
 const News: React.FC = () => {
   const [newsData, setNewsData] = useState<NewsDataProps[]>([]);
   const [country, setCountry] = useState("en");
-  const [tag, setTag] = useState("general");
+  const [activeTab, setActiveTab] = useState("general");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,13 +29,13 @@ const News: React.FC = () => {
                 "apikey 4DkjM6zclrZJB1cgRhEtFt:1eduddcL4WIP70RIqFv1x1",
             },
             params: {
+              tag: activeTab,
+              paging: "0",
               country: country,
-              tag: tag,
-              paging: "0", // Default page number
             },
           }
         );
-
+        setCountry("en");
         setNewsData(response.data.result);
       } catch (error) {
         console.error("Error fetching news:", error);
@@ -43,46 +43,50 @@ const News: React.FC = () => {
     };
 
     fetchData();
-  }, [country, tag]);
+  }, [country, activeTab]);
+
+  const tabs = ["General", "Sport", "Economy"];
 
   return (
     <div>
-      <div className="dropdowns">
-        <div className="dropdown">
-          <label htmlFor="country">Select Country: </label>
-          <select
-            id="country"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
+      <div>
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            className={`tab-button ${activeTab === tab ? "active" : ""}`}
+            onClick={() => setActiveTab(tab)}
           >
-            <option value="tr">Turkey</option>
-            <option value="de">Germany</option>
-            <option value="en">England</option>
-            <option value="ru">Russia</option>
-          </select>
-        </div>
-        <div className="dropdown">
-          <label htmlFor="tag">Select News Topic: </label>
-          <select id="tag" value={tag} onChange={(e) => setTag(e.target.value)}>
-            <option value="general">General</option>
-            <option value="sport">Sport</option>
-            <option value="economy">Economy</option>
-          </select>
-        </div>
-      </div>
-      <ul className="news-list">
-        {newsData.map((newsItem) => (
-          <li key={newsItem.key} className="news-item">
-            <h2>{newsItem.name}</h2>
-            <p>{newsItem.description}</p>
-            <img src={newsItem.image} alt={newsItem.name} className="image" />
-            <p>Date: {new Date(newsItem.date).toLocaleString()}</p>
-            <p>Source: {newsItem.source}</p>
-            <a href={newsItem.url} target="_blank" rel="noopener noreferrer">
-              Read More
-            </a>
-          </li>
+            {tab}
+          </button>
         ))}
+      </div>
+      <ul>
+        {newsData && newsData.length > 0 ? (
+          newsData.map((newsItem) => (
+            <li key={newsItem.key} className="news-item">
+              <img src={newsItem.image} alt={newsItem.name} />
+              <h2>{newsItem.name}</h2>
+              <p className="text-neutral-500 dark:text-neutral-300 desc">
+                {newsItem.description}
+              </p>
+              <p className="date">
+                Date: {new Date(newsItem.date).toLocaleString()}
+              </p>
+              <p className="source">Source: {newsItem.source}</p>
+              <a
+                className="link"
+                href={newsItem.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read More
+              </a>
+              <hr />
+            </li>
+          ))
+        ) : (
+          <p>No news data available.</p>
+        )}
       </ul>
     </div>
   );
