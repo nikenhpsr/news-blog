@@ -1,0 +1,14 @@
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    5,
+    10px
+  ); /* 1 row and 5 columns with 10px width each */
+  gap: 35px; /* Gap between icons */
+  justify-content: center;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
