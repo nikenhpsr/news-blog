@@ -37,6 +37,7 @@ const News: React.FC = () => {
         );
         setCountry("en");
         setNewsData(response.data.result);
+        console.log("News data updated:", response.data.result);
       } catch (error) {
         console.error("Error fetching news:", error);
       }
@@ -45,7 +46,7 @@ const News: React.FC = () => {
     fetchData();
   }, [country, activeTab]);
 
-  const tabs = ["General", "Sport", "Economy"];
+  const tabs = ["general", "sport", "economy"];
 
   return (
     <div>
